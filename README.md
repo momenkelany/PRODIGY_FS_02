@@ -197,3 +197,9 @@ The User model includes:
 ## License
 
 This project is licensed under the MIT License.
+
+---
+
+🎓 Internship Program Prodigy InfoTech  
+📅 Task 02 – Full-Stack Employee Management System  
+🚀 Intern Momen Kelany
