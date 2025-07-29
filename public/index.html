@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1>AuthSystem</h1>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="/login" class="nav-link" id="loginLink">Login</a>
+                <a href="/register" class="nav-link" id="registerLink">Register</a>
+                <a href="/dashboard" class="nav-link" id="dashboardLink" style="display: none;">Dashboard</a>
+                <a href="/admin" class="nav-link" id="adminLink" style="display: none;">Admin</a>
+                <button class="nav-link btn-logout" id="logoutBtn" style="display: none;">Logout</button>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Secure Authentication System</h1>
+                    <p class="hero-description">
+                        A full-featured user authentication system developed using Express.js and MongoDB. 
+                        Features secure registration, login, session management, and role-based access control.
+                    </p>
+                    <div class="hero-actions" id="heroActions">
+                        <a href="/register" class="btn btn-primary" id="getStartedBtn">Get Started</a>
+                        <a href="/login" class="btn btn-secondary" id="loginBtn">Login</a>
+                    </div>
+                    <div class="user-welcome" id="userWelcome" style="display: none;">
+                        <h2>Welcome back, <span id="userName"></span>!</h2>
+                        <p>You are successfully authenticated.</p>
+                        <div class="welcome-actions">
+                            <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3>Secure Authentication</h3>
+                        <p>Password hashing with bcrypt and secure session management</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>User Management</h3>
+                        <p>Complete user registration and profile management system</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Role-Based Access</h3>
+                        <p>Different access levels for users and administrators</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Modern Stack</h3>
+                        <p>Built with Express.js, MongoDB, and vanilla JavaScript</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AuthSystem. Built with Express.js and MongoDB.</p>
+        </div>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+    <script>
+        // Initialize navigation and check auth status
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            initNavigation();
+        });
+    </script>
+</body>
+</html>

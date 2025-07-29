@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Authentication System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1><a href="/">AuthSystem</a></h1>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/dashboard" class="nav-link active">Dashboard</a>
+                <a href="/admin" class="nav-link" id="adminLink" style="display: none;">Admin</a>
+                <button class="nav-link btn-logout" id="logoutBtn">Logout</button>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Dashboard</h1>
+                <p class="dashboard-subtitle">Welcome to your personal dashboard</p>
+            </div>
+
+            <div class="dashboard-loading" id="dashboardLoading">
+                <div class="loader"></div>
+                <p>Loading dashboard...</p>
+            </div>
+
+            <div class="dashboard-content" id="dashboardContent" style="display: none;">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card user-info">
+                        <h3>Profile Information</h3>
+                        <div class="user-details" id="userDetails">
+                            <!-- User details will be loaded here -->
+                        </div>
+                        <button class="btn btn-secondary" id="editProfileBtn">Edit Profile</button>
+                    </div>
+
+                    <div class="dashboard-card user-stats">
+                        <h3>Account Statistics</h3>
+                        <div class="stats-grid" id="userStats">
+                            <!-- Stats will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card recent-activity">
+                        <h3>Recent Activity</h3>
+                        <div class="activity-list" id="activityList">
+                            <div class="activity-item">
+                                <div class="activity-icon">🔐</div>
+                                <div class="activity-details">
+                                    <h4>Successful Login</h4>
+                                    <p id="lastLoginTime">Loading...</p>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">👤</div>
+                                <div class="activity-details">
+                                    <h4>Account Created</h4>
+                                    <p id="accountCreatedTime">Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="actions-grid">
+                            <button class="action-btn" id="refreshDataBtn">
+                                <span class="action-icon">🔄</span>
+                                <span>Refresh Data</span>
+                            </button>
+                            <button class="action-btn" id="viewProfileBtn">
+                                <span class="action-icon">👤</span>
+                                <span>View Profile</span>
+                            </button>
+                            <button class="action-btn" id="securityBtn">
+                                <span class="action-icon">🛡️</span>
+                                <span>Security Settings</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-error" id="dashboardError" style="display: none;">
+                <h3>Access Denied</h3>
+                <p>You need to be logged in to access this page.</p>
+                <a href="/login" class="btn btn-primary">Login</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Profile Edit Modal -->
+    <div class="modal" id="profileModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Profile</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <form class="modal-form" id="profileForm">
+                <div class="form-group">
+                    <label for="editUsername">Username</label>
+                    <input type="text" id="editUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" name="email" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+                <div class="form-message" id="profileMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Employee Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1><a href="/">AuthSystem</a></h1>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/dashboard" class="nav-link" id="dashboardLink">Dashboard</a>
+                <a href="/admin" class="nav-link active" id="adminLink">Admin</a>
+                <button class="nav-link btn-logout" id="logoutBtn" style="display: none;">Logout</button>
+                <a href="/login" class="nav-link" id="loginLink">Login</a>
+                <a href="/register" class="nav-link" id="registerLink">Register</a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="admin-main">
+        <div class="container">
+            <div class="admin-header">
+                <h1>Employee Management System</h1>
+                <p class="admin-subtitle">Comprehensive employee administration and management</p>
+            </div>
+
+            <div class="admin-loading" id="adminLoading">
+                <div class="loader"></div>
+                <p>Loading admin panel...</p>
+            </div>
+
+            <div class="admin-content" id="adminContent" style="display: none;">
+                <!-- Navigation Tabs -->
+                <div class="admin-tabs">
+                    <button class="tab-button active" data-tab="employees">Employees</button>
+                    <button class="tab-button" data-tab="statistics">Statistics</button>
+                    <button class="tab-button" data-tab="users">Users</button>
+                </div>
+
+                <!-- Employees Tab -->
+                <div class="tab-content active" id="employees-tab">
+                    <div class="employees-header">
+                        <h3>Employee Management</h3>
+                        <div class="employees-actions">
+                            <button class="btn btn-primary" id="addEmployeeBtn">
+                                <span class="btn-icon">+</span>
+                                Add Employee
+                            </button>
+                            <button class="btn btn-secondary" id="refreshEmployeesBtn">
+                                <span class="btn-icon">↻</span>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Employee Filters -->
+                    <div class="employees-filters">
+                        <div class="filter-group">
+                            <input type="text" id="searchEmployees" placeholder="Search employees..." class="filter-input">
+                        </div>
+                        <div class="filter-group">
+                            <select id="filterDepartment" class="filter-select">
+                                <option value="">All Departments</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Sales">Sales</option>
+                                <option value="HR">HR</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Operations">Operations</option>
+                                <option value="Customer Service">Customer Service</option>
+                                <option value="IT">IT</option>
+                                <option value="Legal">Legal</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <select id="filterStatus" class="filter-select">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="terminated">Terminated</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Employees Table -->
+                    <div class="employees-table-container">
+                        <table class="employees-table" id="employeesTable">
+                            <thead>
+                                <tr>
+                                    <th data-sort="employeeId">Employee ID</th>
+                                    <th data-sort="personalInfo.firstName">Name</th>
+                                    <th data-sort="personalInfo.email">Email</th>
+                                    <th data-sort="jobInfo.title">Title</th>
+                                    <th data-sort="jobInfo.department">Department</th>
+                                    <th data-sort="status">Status</th>
+                                    <th data-sort="jobInfo.startDate">Start Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeesTableBody">
+                                <!-- Employees will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination" id="employeesPagination">
+                        <!-- Pagination will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Statistics Tab -->
+                <div class="tab-content" id="statistics-tab">
+                    <div class="stats-header">
+                        <h3>Employee Statistics</h3>
+                    </div>
+                    
+                    <div class="stats-overview">
+                        <div class="stats-grid" id="employeeStats">
+                            <!-- Employee stats will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="stats-charts">
+                        <div class="chart-container">
+                            <h4>Employees by Department</h4>
+                            <div class="chart" id="departmentChart">
+                                <!-- Department chart will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <h4>Employment Types</h4>
+                            <div class="chart" id="employmentTypeChart">
+                                <!-- Employment type chart will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Tab -->
+                <div class="tab-content" id="users-tab">
+                    <div class="users-header">
+                        <h3>System Users</h3>
+                    </div>
+                    
+                    <div class="admin-stats">
+                        <div class="stats-grid" id="systemStats">
+                            <!-- User stats will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="users-table-container">
+                        <table class="users-table" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Last Login</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Users will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-error" id="adminError" style="display: none;">
+                <h3>Access Denied</h3>
+                <p>You need administrator privileges to access this page.</p>
+                <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Employee Modal -->
+    <div class="modal" id="employeeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Employee</h3>
+                <button class="modal-close" id="closeEmployeeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="employeeForm">
+                    <div class="form-sections">
+                        <!-- Personal Information Section -->
+                        <div class="form-section">
+                            <h4>Personal Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name *</label>
+                                    <input type="text" id="firstName" name="personalInfo.firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name *</label>
+                                    <input type="text" id="lastName" name="personalInfo.lastName" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" name="personalInfo.email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="tel" id="phone" name="personalInfo.phone">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dateOfBirth">Date of Birth</label>
+                                    <input type="date" id="dateOfBirth" name="personalInfo.dateOfBirth">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address Section -->
+                        <div class="form-section">
+                            <h4>Address</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="street">Street</label>
+                                    <input type="text" id="street" name="personalInfo.address.street">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" name="personalInfo.address.city">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" name="personalInfo.address.state">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="zipCode">ZIP Code</label>
+                                    <input type="text" id="zipCode" name="personalInfo.address.zipCode">
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <input type="text" id="country" name="personalInfo.address.country" value="United States">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Information Section -->
+                        <div class="form-section">
+                            <h4>Job Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="jobTitle">Job Title *</label>
+                                    <input type="text" id="jobTitle" name="jobInfo.title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="department">Department *</label>
+                                    <select id="department" name="jobInfo.department" required>
+                                        <option value="">Select Department</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="HR">HR</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Operations">Operations</option>
+                                        <option value="Customer Service">Customer Service</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Legal">Legal</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="startDate">Start Date *</label>
+                                    <input type="date" id="startDate" name="jobInfo.startDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="employmentType">Employment Type</label>
+                                    <select id="employmentType" name="jobInfo.employmentType">
+                                        <option value="full-time">Full-time</option>
+                                        <option value="part-time">Part-time</option>
+                                        <option value="contract">Contract</option>
+                                        <option value="intern">Intern</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="salary">Salary</label>
+                                    <input type="number" id="salary" name="jobInfo.salary" min="0" max="10000000">
+                                </div>
+                                <div class="form-group">
+                                    <label for="manager">Manager</label>
+                                    <select id="manager" name="jobInfo.manager">
+                                        <option value="">Select Manager</option>
+                                        <!-- Managers will be loaded dynamically -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select id="status" name="status">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                        <option value="terminated">Terminated</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-message" id="employeeFormMessage"></div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelEmployeeForm">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="btn-text">Save Employee</span>
+                            <span class="btn-loader" style="display: none;">Saving...</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3 id="confirmTitle">Confirm Action</h3>
+                <button class="modal-close" id="closeConfirmModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">Are you sure you want to perform this action?</p>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelConfirm">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmAction">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+</html>
+
